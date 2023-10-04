@@ -1,0 +1,11 @@
+body{
+    background-color: grey;
+}
+.container{
+
+   text-align: center;
+}
+#results{
+    color: aliceblue;
+    font-size: 2rem;
+}
