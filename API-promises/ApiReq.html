@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: #212121; color: wheat;">
+    0	UNSENT	Client has been created. open() not called yet.
+1	OPENED	open() has been called.
+2	HEADERS_RECEIVED	send() has been called, and headers and status are available.
+3	LOADING	Downloading; responseText holds partial data.
+4	DONE	The operation is complete.
+
+<button id="getid">Get data</button>
+<p id="datadisplay"></p>
+</body>
+<script>
+    //to get data from github api using XMLHttpRequest
+    const requestUrl = 'https://api.github.com/users/Bharathgit5'
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', requestUrl)
+    //to track continuously --> 2 3 4
+    xhr.onreadystatechange = function(){
+        console.log(xhr.readyState);
+        //to detect state
+        if(xhr.readyState === 4){
+            const data = JSON.parse(this.responseText); //this is very important 
+            console.log(typeof data) // this gives string so convert string to object(json)
+          //  console.log(data.followers) this gives undefined because typeof data is string but data.followers is used to access obj 
+          console.log(data.followers)
+          document.getElementById('getid').addEventListener('click',function(){
+            document.getElementById('datadisplay').innerHTML=`followers: ${data.followers}`;
+            
+           const pic= document.createElement('img')
+           pic.setAttribute('src',data.avatar_url);
+           pic.setAttribute('height','100')
+           pic.setAttribute('width','100')
+           document.body.appendChild(pic)
+          })
+        }
+    }
+
+ xhr.send()
+</script>
+</html>
