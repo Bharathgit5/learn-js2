@@ -33,7 +33,7 @@ promiseThree.then(function(user){
 
 const promiseFour = new Promise(function(resolve,reject){
     setTimeout(function(){
-        let error = false
+        let error = true
         if(!error){
             resolve({username:'bharath',password:'120'})
         }else {
@@ -56,3 +56,50 @@ console.log(username)
 }).finally(() =>{
     console.log('the promise is either resolved or rejected')
 })
+
+const promiseFive = new Promise(function(resolve,reject){
+    setTimeout(function(){
+        let error = false
+        if(!error){
+            resolve({username:'bharathgit5',password:'12345'})
+        }else{
+            reject('ERROR: PROMISE5 went wrong')
+        }
+    },1000)
+})
+
+//another approch instead of .then and .catch i.e async and await
+async function consumePromiseFive(){
+   try{
+    const result = await promiseFive //promise is an obj should not call like function promiseFive()
+    console.log(result)
+   } catch(error){
+    console.log(error)
+   }
+}
+
+consumePromiseFive() //gives output when error = false but when erro = true then the problem comes
+//async await cannot handle errors directly so use try catch block to handle errors
+
+async function getAllusers(){
+    try{
+        const response=await fetch('https://jsonplaceholder.typicode.com/users')
+        const data = await response.json() //this responsec also await
+        console.log(data)
+    }catch(error){
+      console.log(error)
+    }
+   
+}
+//getAllusers()
+//same exaple in .then and .catch
+
+fetch('https://jsonplaceholder.typicode.com/users')
+.then((response) => {
+    return response.json()
+})
+.then((data) => {
+    console.log(data)
+})
+.catch((error) => console.log(error))
+//why does fetch respnse comes first of all other code???????
