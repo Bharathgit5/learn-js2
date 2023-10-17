@@ -103,3 +103,21 @@ fetch('https://jsonplaceholder.typicode.com/users')
 })
 .catch((error) => console.log(error))
 //why does fetch respnse comes first of all other code???????
+
+//HOW DOES FEtCH WORKS
+//a fetch promise rejects when a network error is encountered , it doesnot reject on https errors like 404
+//why does fetch respnse comes first of all other code???????
+/* 1. js engine has two components one is memeory heap and another one is call stack
+from call stack some function call to webAPI --> SETTIMEOUT and the moves to register callback and moves on
+fetch contains in webAPI and it creates a special priority queue(callback) which exceute faster compared to settimeout
+
+*/
+/*
+
+respnse = fetch('something)
+fetch divides work into two parts one is data and another one is webbrowser
+data(one method) reserve memory for data comes from browser resolve stores in onfullfilled[] and 
+onrejection[] when it gets rejcted.
+from webbrowser we will get network req  if the data is resolve(404 can be resolved only its not an error) then it goes to onfullfilled if any error(not 404 https) it goes to onrejection[]
+data will fullfill the respne and we will get data
+*/
