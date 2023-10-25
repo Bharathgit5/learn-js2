@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Closure</title>
+</head>
+<body>
+    <button id="orange">Orange</button>
+    <button id="pink">Pink</button>
+</body>
+
+<script>
+    function init(){
+        let name = "bharath";
+        function displayname(){
+            console.log(name);
+        }
+        displayname();
+    }
+    init();
+
+    //every func has its own scope
+    function outer(){
+        let username = "bharathsa";
+        function inner(){
+            let siblingscrete = '123'
+            console.log('INNER: ',username); // username can be accessed here
+        } //inner function can access the outer func variables this is know as lexical scoping
+        function innerTwo(){
+            console.log('innerTwo: ',username)
+           // console.log('innertwo', siblingscrete) //cannot be used betwwn two siblings
+        }
+        inner();
+        innerTwo();
+
+    }
+    outer()
+    console.log('OUTER: ', username); //cannot use variables declared inside a func scope cannot be accessed outside of func scope
+
+    //lexical scoping - variables can be used from parent to children but childrens variables cannot be accessed by sibling or parent 
+</script>
+<script>
+    //closure
+    function makefunc(){
+        const name = 'ukthi';
+        function displayname(){
+            console.log(name)
+        }
+        return displayname; //return whole lexical scope
+    }
+
+    const myfunc = makefunc();
+    myfunc()
+    //Global variables can be made local (private) with closures.
+
+/* closure is created when a child function keep the environment of the parent scope even after the parent function has already executed 
+*/
+
+</script>
+<script>
+
+    //to understand closure we have 2 buttons when user clicked on the button then bgcolor changed
+/*document.getElementById('orange').onclick = function(){
+    document.body.style.backgroundColor ='orange'
+}
+
+document.getElementById('pink').onclick = function(){
+    document.body.style.backgroundColor ='pink'
+}*/
+
+//if we want to use 100 button then we cannot do manually
+function clicHandler(color){
+  //  document.body.style.backgroundColor = `${color}`
+ return function(){
+    document.body.style.backgroundColor = `${color}`
+  }
+}
+/* directly exceuting function we want to return a function but it was exceuting
+document.getElementById('orange').onclick = clicHandler('orange')
+*/
+
+document.getElementById('orange').onclick = clicHandler('orange')
+document.getElementById('pink').onclick = clicHandler('pink')
+</script>
+</html>
